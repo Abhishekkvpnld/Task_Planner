@@ -1,4 +1,3 @@
-
 //====Types====
 export type MyTask = {
   title: string;
@@ -14,10 +13,16 @@ export type ResizeArg = {
   end: Date;
 };
 
-
 export type TaskModalProps = {
   onClose: () => void;
   selectedDate: Date;
   setMyTaskList: React.Dispatch<React.SetStateAction<MyTask[]>>;
   selectedEndDate: Date;
 };
+
+export type FilterProps = {
+  searchInput: string;
+  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export type FilterModalProps = {};

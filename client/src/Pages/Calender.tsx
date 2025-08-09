@@ -8,12 +8,14 @@ import Navbar from "../components/Navbar";
 import TaskModal from "../components/TaskModal";
 import "./style.css";
 import type { MyTask, ResizeArg } from "../types/types";
+import Filter from "../components/Filter";
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar: any = withDragAndDrop(Calendar);
 
 const Calender = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [searchInput, setSearchInput] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
   const [myTaskList, setMyTaskList] = useState<MyTask[]>(() => {
@@ -25,6 +27,7 @@ const Calender = () => {
       end: new Date(task.end),
     }));
   });
+  const [filteredTasks, setFilteredTasks] = useState<MyTask[]>(myTaskList);
 
   // Save to localStorage whenever myTaskList changes
   useEffect(() => {
@@ -60,13 +63,28 @@ const Calender = () => {
     setMyTaskList(updatedTasks);
   };
 
+  useEffect(() => {
+    if (!searchInput) {
+      setFilteredTasks(myTaskList);
+      return;
+    }
+
+    const filtered = myTaskList.filter((task) =>
+      task.title.toLowerCase().includes(searchInput.trim().toLocaleLowerCase())
+    );
+
+    setFilteredTasks(filtered);
+  }, [searchInput, myTaskList]);
+
   return (
     <div className="flex items-center justify-center w-[100vw] flex-col">
       <Navbar />
 
+      <Filter searchInput={searchInput} setSearchInput={setSearchInput} />
+
       <DnDCalendar
         localizer={localizer}
-        events={myTaskList?.map((task) => ({
+        events={filteredTasks?.map((task) => ({
           ...task,
           allDay: task?.allDay ?? true,
         }))}
