@@ -1,0 +1,8 @@
+.rbc-today {
+  background-color: rgb(56, 212, 51);
+  border-radius: 5px;
+}
+
+.rbc-selected-cell {
+  background-color: rgba(6, 217, 240, 0.2);
+}
