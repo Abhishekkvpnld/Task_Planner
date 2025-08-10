@@ -9,11 +9,14 @@ import TaskModal from "../components/TaskModal";
 import "./style.css";
 import type { MyTask, ResizeArg } from "../types/types";
 import Filter from "../components/Filter";
+import { useChangeTheme } from "../context/ThemeContext";
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar: any = withDragAndDrop(Calendar);
 
 const Calender = () => {
+  const { darkTheme } = useChangeTheme();
+
   const [openModal, setOpenModal] = useState(false);
   const [searchInput, setSearchInput] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -28,7 +31,6 @@ const Calender = () => {
     }));
   });
   const [filteredTasks, setFilteredTasks] = useState<MyTask[]>(myTaskList);
-
 
   // Multi-day selection
   const handleSelectSlot = ({ start, end }: { start: Date; end: Date }) => {
@@ -78,10 +80,18 @@ const Calender = () => {
   }, [searchInput, myTaskList]);
 
   return (
-    <div className="flex items-center bg-slate-100 justify-center w-[100vw] flex-col">
+    <div
+      className={`flex items-center justify-center w-[100vw] flex-col transition-colors duration-300
+      ${darkTheme ? "bg-slate-900 text-gray-200" : "bg-slate-100 text-gray-800"}
+    `}
+    >
       <Navbar />
 
-      <Filter searchInput={searchInput} setSearchInput={setSearchInput}  setFilteredTasks={setFilteredTasks} />
+      <Filter
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        setFilteredTasks={setFilteredTasks}
+      />
 
       <DnDCalendar
         localizer={localizer}
@@ -101,7 +111,13 @@ const Calender = () => {
         onSelectSlot={handleSelectSlot}
         onEventResize={handleEventResize}
         onEventDrop={handleEventDrop}
-        className="shadow-md border-2 bg-white border-slate-200 rounded-md p-0.5 mb-6"
+        className={`shadow-md border-2 rounded-md p-0.5 mb-6 transition-colors duration-300
+        ${
+          darkTheme
+            ? "bg-slate-800 border-slate-700"
+            : "bg-white border-slate-200"
+        }
+      `}
       />
 
       {openModal && (

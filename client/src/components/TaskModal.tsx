@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import toast from "react-hot-toast";
 import { useChangeTheme } from "../context/ThemeContext";
 import type { MyTask, TaskModalProps } from "../types/types";
-
+import moment from "moment";
 
 const TaskModal: React.FC<TaskModalProps> = ({
   onClose,
@@ -80,13 +80,17 @@ const TaskModal: React.FC<TaskModalProps> = ({
         <p className="text-sm text-gray-500 mb-4">
           Selected Date:{" "}
           <span className="font-medium text-red-500">
-            {selectedDate?.toLocaleDateString("en-US", {
-              weekday: "short",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {moment(selectedDate).format("ddd, YYYY MMMM D")}
           </span>
+          {selectedDate.getTime() !== selectedEndDate.getTime() && (
+            <>
+              {" "}
+              -{" "}
+              <span className="font-medium text-blue-500">
+                {moment(selectedEndDate).format("ddd, YYYY MMMM D")}
+              </span>
+            </>
+          )}
         </p>
 
         {/* Task Name */}
