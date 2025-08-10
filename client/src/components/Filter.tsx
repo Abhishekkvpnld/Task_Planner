@@ -4,7 +4,11 @@ import { CiFilter } from "react-icons/ci";
 import FilterModal from "./FilterModal";
 import type { FilterProps } from "../types/types";
 
-const Filter: React.FC<FilterProps> = ({ searchInput, setSearchInput }) => {
+const Filter: React.FC<FilterProps> = ({
+  searchInput,
+  setSearchInput,
+  setFilteredTasks
+}) => {
   const [showFilterModal, setShowFilterModal] = useState(false);
 
   return (
@@ -39,7 +43,7 @@ const Filter: React.FC<FilterProps> = ({ searchInput, setSearchInput }) => {
       {/* Filter Modal */}
       {showFilterModal && (
         <div className="absolute top-full left-0 mt-2 z-10">
-          <FilterModal />
+          <FilterModal setFilteredTasks={setFilteredTasks}/>
         </div>
       )}
     </div>

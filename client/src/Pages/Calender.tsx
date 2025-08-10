@@ -29,10 +29,6 @@ const Calender = () => {
   });
   const [filteredTasks, setFilteredTasks] = useState<MyTask[]>(myTaskList);
 
-  // Save to localStorage whenever myTaskList changes
-  useEffect(() => {
-    localStorage.setItem("myTaskList", JSON.stringify(myTaskList));
-  }, [myTaskList]);
 
   // Multi-day selection
   const handleSelectSlot = ({ start, end }: { start: Date; end: Date }) => {
@@ -63,6 +59,11 @@ const Calender = () => {
     setMyTaskList(updatedTasks);
   };
 
+  // Save to localStorage whenever myTaskList changes
+  useEffect(() => {
+    localStorage.setItem("myTaskList", JSON.stringify(myTaskList));
+  }, [myTaskList]);
+
   useEffect(() => {
     if (!searchInput) {
       setFilteredTasks(myTaskList);
@@ -77,10 +78,10 @@ const Calender = () => {
   }, [searchInput, myTaskList]);
 
   return (
-    <div className="flex items-center justify-center w-[100vw] flex-col">
+    <div className="flex items-center bg-slate-100 justify-center w-[100vw] flex-col">
       <Navbar />
 
-      <Filter searchInput={searchInput} setSearchInput={setSearchInput} />
+      <Filter searchInput={searchInput} setSearchInput={setSearchInput}  setFilteredTasks={setFilteredTasks} />
 
       <DnDCalendar
         localizer={localizer}
@@ -100,7 +101,7 @@ const Calender = () => {
         onSelectSlot={handleSelectSlot}
         onEventResize={handleEventResize}
         onEventDrop={handleEventDrop}
-        className="shadow-md border-2 border-slate-200 rounded-md p-0.5"
+        className="shadow-md border-2 bg-white border-slate-200 rounded-md p-0.5 mb-6"
       />
 
       {openModal && (

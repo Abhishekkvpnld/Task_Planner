@@ -1,9 +1,7 @@
 import { useState, type FormEvent } from "react";
 import toast from "react-hot-toast";
 import { useChangeTheme } from "../context/ThemeContext";
-import type { TaskModalProps } from "../types/types";
-
-
+import type { MyTask, TaskModalProps } from "../types/types";
 
 
 const TaskModal: React.FC<TaskModalProps> = ({

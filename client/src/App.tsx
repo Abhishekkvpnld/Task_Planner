@@ -8,7 +8,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Calender />}></Route>
       </Routes>
-      <Toaster position="top-right" />
+      <Toaster position="bottom-right" />
     </Router>
   );
 };
